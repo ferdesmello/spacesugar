@@ -1,0 +1,19 @@
+{
+    "scene_name": "Sert\u00e3ozinho_test",
+    "patch_size": 128,
+    "stride": 64,
+    "bands": [
+        "Blue",
+        "Green",
+        "Red",
+        "NIR"
+    ],
+    "normalization": "per_band_99.9_percentile",
+    "image_height": 2500,
+    "image_width": 2372,
+    "crs": "EPSG:4326",
+    "dtype": "float32",
+    "number_of_patches": 1368,
+    "source": "Sentinel-2",
+    "label_source": "Brazil Sugarcane Mesh 2024"
+}
