@@ -1,2 +1,42 @@
-# sugarcane
-Code for the Challenge 1 of the residency with Epic of Sun
+# Sugarcane
+
+Code for the Challenge 1 of the HBR residence with Epic of Sun.
+
+## Overview
+
+Check how the satellite images and the sugarcane poligons map were obtained [here](https://docs.google.com/document/d/13IcYZTUAA2PNvw97chLme6LqQtXJPMRA42IeirPJtfs/edit?usp=sharing).
+
+## Repository structure
+
+<pre>
+├── README.md
+├── data                     # Data for preprocessing and training
+│   ├── processed            # Processed data to be used in training
+│   │   ├── README.md
+│   │   ├── images           # Image patches as numpy arrays
+│   │   ├── masks            # Mask patches as numpy arrays
+│   │   ├── metadata.json    # General information of the processed data
+│   │   └── patch_index.csv  # Index of the patches for organization
+│   └── raw                  # Raw data
+│       ├── images           # Raw tif satellite images
+│       └── masks            # Raw shapefile
+├── figures                  # Produced figures as results
+├── models                   # The saved models after training
+├── preprocessing.ipynb      # Jupyter notebook for preprocessing the data
+└── training.ipynb           # Jupyter notebook for training the model
+
+</pre>
+
+## Figures
+
+![Mask over image](./figures/sugarcane_mask_over_image.png "The sugarcane mask over satellite test image")
+The sugarcane mask over satellite test image
+
+![Patch image and mask pair.](./figures/patch_image_with_mask.png "Example of patch image and mask pair.")
+Example of patch image and mask pair.
+
+![Test image and mask pair and result](./figures/unet_sugarcane_results_3.png "Example of image and mask pair and the model result.")
+Example of image and mask pair and the model result.
+
+![Trained UNet.](./figures/unet_sugarcane_results.png "Some metrics of the trained test UNet.")
+Some metrics of the trained test UNet.
