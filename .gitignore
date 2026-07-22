@@ -15,21 +15,3 @@
 *.yml
 
 *Zone.Identifier
-
-*.dbf
-*.prj
-*.qmd
-*.shp
-*.shx
-
-*.tiff
-*.xml
-*.tif
-
-*.npy
-
-*.keras
-
-*.yml
-
-*Zone.Identifier
