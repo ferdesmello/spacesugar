@@ -1,4 +1,4 @@
-# Sugarcane
+# SpaceSugar
 
 Code for the Challenge 1 of the HBR residence with Epic of Sun.
 
