@@ -1,22 +1,5 @@
 unet_tuner_results/
-
-*.dbf
-*.prj
-*.qmd
-*.shp
-*.shx
-
-*.tiff
-*.xml
-*.tif
-
-*.npy
-
-*.keras
-
-*.yml
-
-*Zone.Identifier
+raw/
 
 *.dbf
 *.prj

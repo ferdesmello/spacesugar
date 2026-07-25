@@ -11,20 +11,24 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 <pre>
 ├── README.md
 ├── data                     # Data for preprocessing and training
+│   ├── interim              # Merged images to be used in patching
 │   ├── processed            # Processed data to be used in training
 │   │   ├── README.md
-│   │   ├── images           # Image patches as numpy arrays
-│   │   ├── masks            # Mask patches as numpy arrays
+│   │   ├── sceneXX          # One scene
+│   │   │   ├── images       # Image patches as numpy arrays for that scene
+│   │   │   ├── masks        # Mask patches as numpy arrays for that scene
+│   │   │   ...
 │   │   ├── metadata.json    # General information of the processed data
 │   │   └── patch_index.csv  # Index of the patches for organization
 │   └── raw                  # Raw data
-│       ├── images           # Raw tif satellite images
-│       └── masks            # Raw shapefile
+│       ├── mask             # Raw shapefile
+│       ├── sceneXX          # Scene XX with raw tif satellite band images
+│       └── ...
 ├── figures                  # Produced figures as results
 ├── models                   # The saved models after training
+├── preprocessing_test.ipynb # Jupyter notebook for test preprocessing one scene
 ├── preprocessing.ipynb      # Jupyter notebook for preprocessing the data
 └── training.ipynb           # Jupyter notebook for training the model
-
 </pre>
 
 ## Figures
@@ -38,5 +42,5 @@ Example of patch image and mask pair.
 ![Test image and mask pair and result](./figures/unet_sugarcane_results_3.png "Example of image and mask pair and the model result.")
 Example of image and mask pair and the model result.
 
-![Trained UNet.](./figures/unet_sugarcane_results.png "Some metrics of the trained test UNet.")
+![Trained U-Net.](./figures/unet_sugarcane_results.png "Some metrics of the trained test U-Net.")
 Some metrics of the trained test UNet.
