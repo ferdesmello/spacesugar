@@ -10,7 +10,7 @@
     ],
     "dtype": "float32",
     "normalization": "per_band_99.9_percentile",
-    "total_patches": 2318,
+    "total_patches": 2622,
     "scenes_processed": [
         "scene02",
         "scene01"
