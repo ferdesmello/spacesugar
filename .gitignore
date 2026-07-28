@@ -1,5 +1,8 @@
 unet_tuner_results/
-raw/
+data/
+apresentações/
+
+
 
 *.dbf
 *.prj

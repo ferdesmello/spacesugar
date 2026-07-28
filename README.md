@@ -33,7 +33,7 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 
 ## Figures
 
-![Mask over image](./figures/sugarcane_mask_over_image.png "The sugarcane mask over satellite test image")
+![Mask over image](./figures/sugarcane_mask_over_scene01.png "The sugarcane mask over satellite test image")
 The sugarcane mask over satellite test image
 
 ![Patch image and mask pair.](./figures/patch_image_with_mask.png "Example of patch image and mask pair.")
