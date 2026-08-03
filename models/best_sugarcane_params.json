@@ -1,1 +1,1 @@
-{"lr": 0.0015621521773555155, "init_filters": 32, "batch_size": 64}
+{"lr": 0.0005408413978036831, "init_filters": 16, "batch_size": 64}
