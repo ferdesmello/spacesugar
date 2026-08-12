@@ -1,6 +1,6 @@
 # SpaceSugar
 
-SpaceSugar is a machine-learning project for identifying sugarcane fields in satellite imagery using semantic segmentation. The current workflow uses a U-Net convolutional neural network trained on image patches and evaluated with segmentation-oriented metrics. It was developed for the Challenge 1 of the HBR residence with Epic of Sun.
+SpaceSugar is a machine-learning project for identifying sugarcane fields in satellite imagery. The current workflow uses a U-Net convolutional neural network trained on image patches. It was developed for the Challenge 1 of the HBR residence with Epic of Sun.
 
 Check how the satellite images and the sugarcane poligons map were obtained [here](https://docs.google.com/document/d/13IcYZTUAA2PNvw97chLme6LqQtXJPMRA42IeirPJtfs/edit?usp=sharing).
 
@@ -8,43 +8,44 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 
 <pre>
 ├── README.md
-├── data/                             # Data for preprocessing and training
-│   ├── interim/                      # Merged images to be used in patching
-│   ├── processed/                    # Processed data to be used in training
+├── data/                        # Data for preprocessing and training
+│   ├── interim/                 # Merged images to be used in patching
+│   ├── processed/               # Processed data to be used in training
 │   │   ├── README.md
-│   │   ├── sceneXX/                  # One scene
-│   │   │   ├── images/               # Image patches as numpy arrays for that scene
-│   │   │   ├── masks/                # Mask patches as numpy arrays for that scene
+│   │   ├── sceneXX/             # One scene
+│   │   │   ├── images/          # Image patches as numpy arrays for that scene
+│   │   │   ├── masks/           # Mask patches as numpy arrays for that scene
 │   │   │   ...
-│   │   ├── metadata.json             # General information of the processed data
-│   │   └── patch_index.csv           # Index of the patches for organization
-│   └── raw/                          # Raw data
-│   │   ├── mask/                     # Raw shapefile
-│   │   ├── sceneXX/                  # Scene XX with raw tif satellite band images
+│   │   ├── metadata.json        # General information of the processed data
+│   │   └── patch_index.csv      # Index of the patches for organization
+│   └── raw/                     # Raw data
+│   │   ├── mask/                # Raw shapefile
+│   │   ├── sceneXX/             # Scene XX with raw tif satellite band images
 │   │   └── ...
-│   └── tfrecords/                    # TFRecord datasets for train/val/test
-│       ├── counts.json               # General information of the processed data
-│       ├── train_000.tfrecord        # Scene XX with TFRecord format
+│   └── tfrecords/               # TFRecord datasets for train/val/test
+│       ├── counts.json          # General information of the processed data
+│       ├── train_000.tfrecord   # Scene XX with TFRecord format
 │       └── ...
-├── figures/                          # Produced figures as results
-├── models/                           # Saved model weights, history, and hyperparameters
-├── preprocessing/                    # Preprocessing data
-│   ├── preprocessing.ipynb           # Preprocessing data for training
-│   ├── image_cropping.ipynb          # Jupyter notebook for selecting scene cropping
-└── training/                         # Training the models
-    ├── hyperparameter_tunning.ipynb  # Jupyter notebook for hyperparameter tunning
-    └── training.ipynb                # Main training and evaluation notebook
+├── figures/                     # Produced figures as results
+├── models/                      # Saved model weights, history, hyperparameters, and metrics
+├── preprocessing/               # Preprocessing data
+│   ├── preprocessing.ipynb      # Preprocessing data for training
+│   ├── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
+└── training/                    # Training the models
+    ├── hyper_tunning.ipynb      # Jupyter notebook for hyperparameter tunning
+    ├── training.ipynb           # Main training notebook
+    └── test.ipynb               # Model evaluation notebook
 </pre>
 
 ## What is in this repository
 
-- `training/training.ipynb`  
-  Main end-to-end notebook for:
-  - loading libraries and data
-  - creating train/validation/test datasets
-  - building the U-Net model
-  - training and saving the model
-  - evaluating predictions and generating visualizations
+- `preprocessing/`  
+  Main notebooks for:
+  - creating the scenes images
+  - loading the raw images and mesh
+  - transforming, normalizing, and rasterizing the data
+  - slicing it in patches
+  - creating the tfrecord files
 
 - `data/processed/`  
   Processed image patches and metadata used by the training pipeline.  
@@ -54,11 +55,20 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
   TFRecord files used for efficient batched loading during training and evaluation.  
   The notebook also expects a `counts.json` file here describing the number of train/validation/test examples.
 
+- `training/`  
+  Main end-to-end notebooks for:
+  - loading libraries and tfrecord files
+  - creating train/validation/test datasets
+  - building the U-Net model
+  - training and saving the model
+  - evaluating predictions and generating visualizations
+
 - `models/`  
   Output directory for trained model artifacts and training metadata, including:
   - `unet_sugarcane.keras`
   - `best_sugarcane_params.json`
   - `training_history.json`
+  - `metrics_data.json`
 
 - `figures/`  
   Directory for generated plots such as:
@@ -92,14 +102,19 @@ The training notebook follows this pipeline:
    - EVI
 5. Build a U-Net segmentation model.
 6. Train the model with checkpointing, early stopping, and learning-rate reduction.
-7. Evaluate the model on the test set using:
+
+The test notebook follows this pipeline:
+
+1. Load patch metadata and dataset counts.
+2. Load model and history
+3. Evaluate the model on the test set using:
    - precision
    - recall
    - F1-score
    - IoU
    - confusion matrix
    - ROC and precision-recall curves
-8. Save the trained model, training history, and figures.
+4. Save the trained model, training history, and figures.
 
 ## Data format
 
@@ -158,20 +173,24 @@ The project relies on the following Python packages:
 ## Running the training pipeline
 
 1. Install the dependencies:
+
    ```bash
    pip install tensorflow keras-tuner scikit-learn pandas numpy matplotlib seaborn joblib
    ```
 
-2. Open and run training/training.ipynb.
+2. Open and run training/training.ipynb if you want to train from scratch.
 
-3. If you want to train from scratch, keep flag_load_model = False.
-If you want to load a previously saved model, set flag_load_model = True.
+3. Open and run training/test.ipynb to check the resulst and metrics
 
 ### Outputs
 After training, the project generates:
 
 * a saved Keras model in models/
 * training history in JSON format
+
+test also generates:
+
+* metrics in models/
 * evaluation figures in figures/
 
 ### Notes

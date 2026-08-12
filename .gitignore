@@ -3,7 +3,6 @@ data/
 apresentações/
 copernicus/
 
-
 *.dbf
 *.prj
 *.qmd
@@ -17,7 +16,5 @@ copernicus/
 *.npy
 
 *.keras
-
-*.yml
 
 *Zone.Identifier

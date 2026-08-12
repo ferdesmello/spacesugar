@@ -10,7 +10,7 @@
     ],
     "dtype": "float32",
     "normalization": "subtract 1000 divide by 10000 and clip to [0.0, 1.2]",
-    "total_patches": 25000,
+    "total_patches": 44890,
     "scenes_processed": [
         "scene02",
         "scene08",
