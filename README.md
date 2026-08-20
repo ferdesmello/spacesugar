@@ -15,10 +15,10 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 │   │   ├── sceneXX/             # One scene
 │   │   │   ├── images/          # Image patches as numpy arrays for that scene
 │   │   │   ├── masks/           # Mask patches as numpy arrays for that scene
-│   │   │   ...
+│   │   ├── ...
 │   │   ├── metadata.json        # General information of the processed data
 │   │   └── patch_index.csv      # Index of the patches for organization
-│   └── raw/                     # Raw data
+│   ├── raw/                     # Raw data
 │   │   ├── mask/                # Raw shapefile
 │   │   ├── sceneXX/             # Scene XX with raw tif satellite band images
 │   │   └── ...
@@ -27,19 +27,21 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 │       ├── train_000.tfrecord   # Scene XX with TFRecord format
 │       └── ...
 ├── figures/                     # Produced figures as results
-├── models/                      # Saved model weights, history, hyperparameters, and metrics
+├── models/                      # Saved model weights, history, hyperparameters, metrics, and benchmarks
 ├── preprocessing/               # Preprocessing data
 │   ├── preprocessing.ipynb      # Preprocessing data for training
-│   ├── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
-└── training/                    # Training the models
-    ├── hyper_tunning.ipynb      # Jupyter notebook for hyperparameter tunning
-    ├── training.ipynb           # Main training notebook
-    └── test.ipynb               # Model evaluation notebook
+│   └── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
+├── training/                    # Training the models
+│   ├── hyper_tuning.ipynb       # Hyperparameter tuning notebook
+│   └── training.ipynb           # Main training notebook
+└── testing/                     # Testing the models
+    ├── test.ipynb               # Model evaluation notebook
+    └── benchmarks.ipynb         # Model benchmark notebook
 </pre>
 
 ## What is in this repository
 
-- `preprocessing/`  
+- `preprocessing/`
   Main notebooks for:
   - creating the scenes images
   - loading the raw images and mesh
@@ -47,30 +49,34 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
   - slicing it in patches
   - creating the tfrecord files
 
-- `data/processed/`  
-  Processed image patches and metadata used by the training pipeline.  
+- `data/processed/`
+  Processed image patches and metadata used by the training pipeline.
   This includes files such as `patch_index.csv`.
 
-- `data/tfrecords/`  
-  TFRecord files used for efficient batched loading during training and evaluation.  
+- `data/tfrecords/`
+  TFRecord files used for efficient batched loading during training and evaluation.
   The notebook also expects a `counts.json` file here describing the number of train/validation/test examples.
 
-- `training/`  
+- `training/`
   Main end-to-end notebooks for:
   - loading libraries and tfrecord files
   - creating train/validation/test datasets
   - building the U-Net model
   - training and saving the model
-  - evaluating predictions and generating visualizations
 
-- `models/`  
+- `testing/`
+  Main end-to-end notebooks for:
+  - evaluating predictions and generating visualizations
+  - benchmarking the trained model
+
+- `models/`
   Output directory for trained model artifacts and training metadata, including:
   - `unet_sugarcane.keras`
   - `best_sugarcane_params.json`
   - `training_history.json`
   - `metrics_data.json`
 
-- `figures/`  
+- `figures/`
   Directory for generated plots such as:
   - loss and accuracy curves
   - confusion matrix and normalized confusion matrix
@@ -83,42 +89,28 @@ The sugarcane mask over satellite test image
 ![Patch image and mask pair.](./figures/patch_image_with_mask.png "Example of patch image and mask pair.")
 Example of patch image and mask pair.
 
-![Test image and mask pair and result](./figures/unet_sugarcane_results_3.png "Example of image and mask pair and the model result.")
+![Test image and mask pair and result](./figures/unet_sugarcane_results_1.png "Example of image and mask pair and the model result.")
 Example of image and mask pair and the model result.
 
 ![Trained U-Net.](./figures/unet_sugarcane_results.png "Some metrics of the trained test U-Net.")
 Some metrics of the trained test UNet.
 
-## Current workflow
+## Data requirements
 
-The training notebook follows this pipeline:
+Before running the notebooks, the repository expects the following folders and files to exist:
 
-1. Load patch metadata and dataset counts.
-2. Create TensorFlow datasets from TFRecord files.
-3. Apply augmentation (flip, rotation, brightness changes).
-4. Optionally add spectral indices as extra channels:
-   - NDVI
-   - NDWI
-   - EVI
-5. Build a U-Net segmentation model.
-6. Train the model with checkpointing, early stopping, and learning-rate reduction.
+- `data/raw/`
+  - one folder per scene, e.g. `scene01/`, containing the satellite bands in GeoTIFF format
+  - one `mask/` folder with the sugarcane polygons in shapefile format
+- `data/interim/`
+  - intermediate merged rasters or processed scene composites
+- `data/processed/`
+  - patch images and masks, plus metadata files such as `patch_index.csv`
+- `data/tfrecords/`
+  - TFRecord dataset shards for train/validation/test
+  - a `counts.json` file with the number of examples in each split
 
-The test notebook follows this pipeline:
-
-1. Load patch metadata and dataset counts.
-2. Load model and history
-3. Evaluate the model on the test set using:
-   - precision
-   - recall
-   - F1-score
-   - IoU
-   - confusion matrix
-   - ROC and precision-recall curves
-4. Save the trained model, training history, and figures.
-
-## Data format
-
-The current pipeline assumes:
+The pipeline assumes:
 
 - input patches are square images of size `128 x 128`
 - each input patch contains 4 spectral bands:
@@ -132,71 +124,105 @@ The current pipeline assumes:
   - EVI
 - labels are binary segmentation masks with shape `(128, 128, 1)`
 
-## Model architecture
+## Setup and environment
 
-The current model is a U-Net-style segmentation network with:
+The project is designed for Python 3.10+ and a Jupyter environment.
 
-- encoder/decoder structure
-- convolution blocks with Batch Normalization and ReLU
-- skip connections
-- a final sigmoid output layer for binary segmentation
+Recommended setup:
 
-The training configuration uses a combined loss based on:
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install --upgrade pip
+pip install tensorflow keras-tuner scikit-learn pandas numpy matplotlib seaborn joblib jupyter
+```
 
-- binary cross-entropy
-- Dice loss
+If your workflow uses geospatial raster/vector processing during preprocessing, additional packages may be required depending on the notebook implementation, such as:
 
-This helps balance pixel-wise classification and overlap-focused segmentation quality.
+* rasterio
+* geopandas
+* shapely
+* pyproj
+* tqdm
 
-## Training features
+For GPU training, make sure your TensorFlow build matches the CUDA/CUDNN drivers available on the machine. For CPU-only training, the standard TensorFlow install is sufficient.
 
-The notebook includes several training helpers and callbacks:
+## Quick start
 
-- `ModelCheckpoint` to save the best-performing model
-- `EarlyStopping` to prevent overfitting
-- `ReduceLROnPlateau` to lower the learning rate when validation loss stagnates
-- augmentation pipelines for improved generalization
+1. Prepare the raw dataset under `data/raw/` and ensure the shapefile mask is aligned with the satellite scenes.
+2. Run the preprocessing notebooks in `preprocessing/` to generate processed patches and TFRecords.
+3. Verify that `data/processed/` and `data/tfrecords/` contain the expected metadata and split files.
+4. Open `training/training.ipynb` and run the full training workflow.
+5. After training, run the evaluation notebook in `testing/` to produce metrics and visualizations.
+
+To launch the notebooks locally:
+
+```bash
+jupyter lab
+```
+
+## Model outputs
+
+The training pipeline saves the following artifacts to `models/`:
+
+* `unet_sugarcane.keras` - trained model weights and architecture
+* `best_sugarcane_params.json` - best hyperparameters found during tuning
+* `training_history.json` - epoch-by-epoch metrics
+* `metrics_data.json` - evaluation metrics (precision, recall, F1, IoU, etc.)
+
+The evaluation pipeline saves figures to `figures/` such as:
+
+* loss/accuracy curves
+* confusion matrix
+* normalized confusion matrix
+* ROC curve
+* precision-recall curve
+* prediction examples over real scenes
+
+## Common conventions and caveats
+
+* The repository is notebook-centric; the main workflow is run from Jupyter notebooks rather than a packaged CLI.
+* The dataset split is assumed to be train/validation/test, and `counts.json` should reflect the number of examples in each split.
+* The current implementation focuses on binary segmentation of sugarcane vs. non-sugarcane, not multi-class land-cover classification.
+* If the data layout or file names change, the notebooks may need to be updated to match the new structure.
+* The project uses patches of size `128 x 128`; full-scene inference typically requires stitching or sliding-window prediction outside the notebook workflow.
 
 ## Dependencies
 
 The project relies on the following Python packages:
 
-- TensorFlow / Keras
-- Keras Tuner
-- scikit-learn
-- pandas
-- numpy
-- matplotlib
-- seaborn
-- joblib
+* TensorFlow / Keras
+* Keras Tuner
+* scikit-learn
+* pandas
+* numpy
+* matplotlib
+* seaborn
+* joblib
 
 ## Running the training pipeline
 
 1. Install the dependencies:
-
-   ```bash
-   pip install tensorflow keras-tuner scikit-learn pandas numpy matplotlib seaborn joblib
-   ```
-
-2. Open and run training/training.ipynb if you want to train from scratch.
-
-3. Open and run training/test.ipynb to check the resulst and metrics
+```bash
+pip install tensorflow keras-tuner scikit-learn pandas numpy matplotlib seaborn joblib
+```
+2. Open and run `training/training.ipynb` if you want to train from scratch.
+3. Open and run `testing/test.ipynb` to check the results and metrics.
 
 ### Outputs
+
 After training, the project generates:
 
-* a saved Keras model in models/
+* a saved Keras model in `models/`
 * training history in JSON format
 
-test also generates:
+The test notebook also generates:
 
-* metrics in models/
-* evaluation figures in figures/
+* metrics in `models/`
+* evaluation figures in `figures/`
 
-### Notes
+## Notes
 
 * The repository is currently centered around the notebook-based training workflow.
-
 * If the dataset layout or file structure changes, the notebook and associated paths may need to be updated accordingly.
-
 * The current implementation is focused on binary segmentation for sugarcane presence/absence rather than multi-class land-cover classification.
