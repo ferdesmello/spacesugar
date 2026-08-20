@@ -84,7 +84,7 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
   - sample prediction visualizations
 
 ![Mask over image](./figures/sugarcane_mask_over_scene01.jpg "The sugarcane mask over satellite test image")
-The sugarcane mask over satellite test image
+The sugarcane mask (red) over scene01 (satellite image) and cropped area used for training.
 
 ![Patch image and mask pair.](./figures/patch_image_with_mask.png "Example of patch image and mask pair.")
 Example of patch image and mask pair.
