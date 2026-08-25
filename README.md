@@ -27,15 +27,21 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 │       ├── train_000.tfrecord   # Scene XX with TFRecord format
 │       └── ...
 ├── figures/                     # Produced figures as results
+│       ├── scenes/
+│       ├── unet/
+│       └── fpn/
 ├── models/                      # Saved model weights, history, hyperparameters, metrics, and benchmarks
+│       ├── unet/
+│       └── fpn/
 ├── preprocessing/               # Preprocessing data
 │   ├── preprocessing.ipynb      # Preprocessing data for training
 │   └── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
 ├── training/                    # Training the models
 │   ├── hyper_tuning.ipynb       # Hyperparameter tuning notebook
-│   └── training.ipynb           # Main training notebook
+│   ├── unet_training.ipynb      # U-Net training notebook
+│   └── fpn_training.ipynb       # FPN training notebook
 └── testing/                     # Testing the models
-    ├── test.ipynb               # Model evaluation notebook
+    ├── results.ipynb            # Model metrics evaluation notebook
     └── benchmarks.ipynb         # Model benchmark notebook
 </pre>
 
