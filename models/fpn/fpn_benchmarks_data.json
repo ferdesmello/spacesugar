@@ -1,0 +1,9 @@
+{
+	"Model": "FPN",
+	"Number of parameters": 6096929,
+	"Parameter size (MB)": 23.241336822509766,
+	"Mean latency (ms)": 57.17373918989324,
+	"Median latency (ms)": 55.92588250146946,
+	"95th percentile latency (ms)": 65.81609694840154,
+	"Latency standard deviation (ms)": 3.813849937890444
+}
