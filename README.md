@@ -8,41 +8,44 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 
 <pre>
 ├── README.md
-├── data/                        # Data for preprocessing and training
-│   ├── interim/                 # Merged images to be used in patching
-│   ├── processed/               # Processed data to be used in training
+├── data/                             # Data for preprocessing and training
+│   ├── interim/                      # Merged images to be used in patching
+│   ├── processed/                    # Processed data to be used in training
 │   │   ├── README.md
-│   │   ├── sceneXX/             # One scene
-│   │   │   ├── images/          # Image patches as numpy arrays for that scene
-│   │   │   ├── masks/           # Mask patches as numpy arrays for that scene
+│   │   ├── sceneXX/                  # One scene
+│   │   │   ├── images/               # Image patches as numpy arrays for that scene
+│   │   │   ├── masks/                # Mask patches as numpy arrays for that scene
 │   │   ├── ...
-│   │   ├── metadata.json        # General information of the processed data
-│   │   └── patch_index.csv      # Index of the patches for organization
-│   ├── raw/                     # Raw data
-│   │   ├── mask/                # Raw shapefile
-│   │   ├── sceneXX/             # Scene XX with raw tif satellite band images
+│   │   ├── metadata.json             # General information of the processed data
+│   │   └── patch_index.csv           # Index of the patches for organization
+│   ├── raw/                          # Raw data
+│   │   ├── mask/                     # Raw shapefile
+│   │   ├── sceneXX/                  # Scene XX with raw tif satellite band images
 │   │   └── ...
-│   └── tfrecords/               # TFRecord datasets for train/val/test
-│       ├── counts.json          # General information of the processed data
-│       ├── train_000.tfrecord   # Scene XX with TFRecord format
+│   └── tfrecords/                    # TFRecord datasets for train/val/test
+│       ├── counts.json               # General information of the processed data
+│       ├── train_000.tfrecord        # Scene XX with TFRecord format
 │       └── ...
-├── figures/                     # Produced figures as results
+├── figures/                          # Produced figures as results
 │       ├── scenes/
 │       ├── unet/
-│       └── fpn/
-├── models/                      # Saved model weights, history, hyperparameters, metrics, and benchmarks
+│       ├── fpn/
+│       └── attention_unet/
+├── models/                           # Saved model weights, history, hyperparameters, metrics, and benchmarks
 │       ├── unet/
-│       └── fpn/
-├── preprocessing/               # Preprocessing data
-│   ├── preprocessing.ipynb      # Preprocessing data for training
-│   └── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
-├── training/                    # Training the models
-│   ├── hyper_tuning.ipynb       # Hyperparameter tuning notebook
-│   ├── unet_training.ipynb      # U-Net training notebook
-│   └── fpn_training.ipynb       # FPN training notebook
-└── testing/                     # Testing the models
-    ├── results.ipynb            # Model metrics evaluation notebook
-    └── benchmarks.ipynb         # Model benchmark notebook
+│       ├── fpn/
+│       └── attention_unet/
+├── preprocessing/                    # Preprocessing data
+│   ├── preprocessing.ipynb           # Preprocessing data for training
+│   └── image_cropping.ipynb          # Jupyter notebook for selecting scene cropping
+├── training/                         # Training the models
+│   ├── hyper_tuning.ipynb            # Hyperparameter tuning notebook
+│   ├── attention_unet_training.ipynb # Attention U-Net training notebook
+│   ├── unet_training.ipynb           # U-Net training notebook
+│   └── fpn_training.ipynb            # FPN training notebook
+└── testing/                          # Testing the models
+    ├── results.ipynb                 # Model metrics evaluation notebook
+    └── benchmarks.ipynb              # Model benchmark notebook
 </pre>
 
 ## What is in this repository
@@ -67,8 +70,8 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
   Main end-to-end notebooks for:
   - loading libraries and tfrecord files
   - creating train/validation/test datasets
-  - building the U-Net model
-  - training and saving the model
+  - building the models
+  - training and saving the models
 
 - `testing/`
   Main end-to-end notebooks for:
@@ -76,11 +79,11 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
   - benchmarking the trained model
 
 - `models/`
-  Output directory for trained model artifacts and training metadata, including:
+  Output directory for trained model artifacts and training metadata, including, for the U-Net model:
   - `unet_sugarcane.keras`
-  - `best_sugarcane_params.json`
-  - `training_history.json`
-  - `metrics_data.json`
+  - `unet_best_hyperparams.json`
+  - `unet_training_history.json`
+  - `unet_metrics_data.json`
 
 - `figures/`
   Directory for generated plots such as:
@@ -172,9 +175,9 @@ jupyter lab
 The training pipeline saves the following artifacts to `models/`:
 
 * `unet_sugarcane.keras` - trained model weights and architecture
-* `best_sugarcane_params.json` - best hyperparameters found during tuning
-* `training_history.json` - epoch-by-epoch metrics
-* `metrics_data.json` - evaluation metrics (precision, recall, F1, IoU, etc.)
+* `unet_hyperparams.json` - best hyperparameters found during tuning
+* `unet_training_history.json` - epoch-by-epoch metrics
+* `unet_metrics_data.json` - evaluation metrics (precision, recall, F1, IoU, etc.)
 
 The evaluation pipeline saves figures to `figures/` such as:
 
