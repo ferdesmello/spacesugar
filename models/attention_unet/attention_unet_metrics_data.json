@@ -1,4 +1,5 @@
 {
+	"Model": "Attention U-Net",
 	"precision": 0.8009834260246637,
 	"recall": 0.8698878805956461,
 	"f1_score": 0.8340148904300597,

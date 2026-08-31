@@ -8,44 +8,46 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 
 <pre>
 ├── README.md
-├── data/                             # Data for preprocessing and training
-│   ├── interim/                      # Merged images to be used in patching
-│   ├── processed/                    # Processed data to be used in training
+├── data/                        # Data for preprocessing and training
+│   ├── interim/                 # Merged images to be used in patching
+│   ├── processed/               # Processed data to be used in training
 │   │   ├── README.md
-│   │   ├── sceneXX/                  # One scene
-│   │   │   ├── images/               # Image patches as numpy arrays for that scene
-│   │   │   ├── masks/                # Mask patches as numpy arrays for that scene
+│   │   ├── sceneXX/             # One scene
+│   │   │   ├── images/          # Image patches as numpy arrays for that scene
+│   │   │   ├── masks/           # Mask patches as numpy arrays for that scene
 │   │   ├── ...
-│   │   ├── metadata.json             # General information of the processed data
-│   │   └── patch_index.csv           # Index of the patches for organization
-│   ├── raw/                          # Raw data
-│   │   ├── mask/                     # Raw shapefile
-│   │   ├── sceneXX/                  # Scene XX with raw tif satellite band images
+│   │   ├── metadata.json        # General information of the processed data
+│   │   └── patch_index.csv      # Index of the patches for organization
+│   ├── raw/                     # Raw data
+│   │   ├── mask/                # Raw shapefile
+│   │   ├── sceneXX/             # Scene XX with raw tif satellite band images
 │   │   └── ...
-│   └── tfrecords/                    # TFRecord datasets for train/val/test
-│       ├── counts.json               # General information of the processed data
-│       ├── train_000.tfrecord        # Scene XX with TFRecord format
+│   └── tfrecords/               # TFRecord datasets for train/val/test
+│       ├── counts.json          # General information of the processed data
+│       ├── train_000.tfrecord   # Scene XX with TFRecord format
 │       └── ...
-├── figures/                          # Produced figures as results
+├── figures/                     # Produced figures as results
 │       ├── scenes/
 │       ├── unet/
 │       ├── fpn/
+│       ├── deeplabv3/
 │       └── attention_unet/
-├── models/                           # Saved model weights, history, hyperparameters, metrics, and benchmarks
+├── models/                      # Saved model weights, history, hyperparameters, metrics, and benchmarks
 │       ├── unet/
 │       ├── fpn/
+│       ├── fpn/
 │       └── attention_unet/
-├── preprocessing/                    # Preprocessing data
-│   ├── preprocessing.ipynb           # Preprocessing data for training
-│   └── image_cropping.ipynb          # Jupyter notebook for selecting scene cropping
-├── training/                         # Training the models
-│   ├── hyper_tuning.ipynb            # Hyperparameter tuning notebook
-│   ├── attention_unet_training.ipynb # Attention U-Net training notebook
-│   ├── unet_training.ipynb           # U-Net training notebook
-│   └── fpn_training.ipynb            # FPN training notebook
-└── testing/                          # Testing the models
-    ├── results.ipynb                 # Model metrics evaluation notebook
-    └── benchmarks.ipynb              # Model benchmark notebook
+├── preprocessing/               # Preprocessing data
+│   ├── preprocessing.ipynb      # Preprocessing data for training
+│   └── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
+├── training/                    # Training the models
+│   ├── attention_unet.ipynb     # Attention U-Net training notebook
+│   ├── deeplabv3.ipynb          # DeepLabV3 training notebook
+│   ├── fpnt.ipynb               # FPN training notebook
+│   └── une.ipynb                # U-Net training notebook
+└── testing/                     # Testing the models
+    ├── results.ipynb            # Model metrics evaluation notebook
+    └── benchmarks.ipynb         # Model benchmark notebook
 </pre>
 
 ## What is in this repository
