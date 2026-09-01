@@ -1,9 +1,9 @@
 {
 	"Model": "Attention U-Net",
 	"Number of parameters": 7901365,
-	"Parameter size (MB)": 30.118854522705078,
-	"Mean latency (ms)": 80.21077527007947,
-	"Median latency (ms)": 79.23851199939236,
-	"95th percentile latency (ms)": 96.53941360093086,
-	"Latency standard deviation (ms)": 8.477704501746508
+	"Parameter size (MB)": 30.141315460205078,
+	"Mean latency (ms)": 71.85716194001088,
+	"Median latency (ms)": 70.55638850010837,
+	"95th percentile latency (ms)": 77.90453359989442,
+	"Latency standard deviation (ms)": 4.330919360823766
 }

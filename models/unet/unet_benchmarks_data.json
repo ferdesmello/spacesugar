@@ -1,9 +1,9 @@
 {
 	"Model": "U-Net",
 	"Number of parameters": 7770081,
-	"Parameter size (MB)": 29.618045806884766,
-	"Mean latency (ms)": 54.6953231007501,
-	"Median latency (ms)": 52.48512549587758,
-	"95th percentile latency (ms)": 66.9344598405587,
-	"Latency standard deviation (ms)": 5.943438528602129
+	"Parameter size (MB)": 29.640506744384766,
+	"Mean latency (ms)": 51.215960870010804,
+	"Median latency (ms)": 50.00398950005547,
+	"95th percentile latency (ms)": 57.894898000131434,
+	"Latency standard deviation (ms)": 3.0806433847934227
 }

@@ -31,11 +31,13 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 │       ├── unet/
 │       ├── fpn/
 │       ├── deeplabv3/
+│       ├── deeplabv3_plus/
 │       └── attention_unet/
 ├── models/                      # Saved model weights, history, hyperparameters, metrics, and benchmarks
 │       ├── unet/
 │       ├── fpn/
-│       ├── fpn/
+│       ├── deeplabv3/
+│       ├── deeplabv3_plus/
 │       └── attention_unet/
 ├── preprocessing/               # Preprocessing data
 │   ├── preprocessing.ipynb      # Preprocessing data for training
@@ -43,6 +45,7 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 ├── training/                    # Training the models
 │   ├── attention_unet.ipynb     # Attention U-Net training notebook
 │   ├── deeplabv3.ipynb          # DeepLabV3 training notebook
+│   ├── deeplabv3_plus.ipynb     # DeepLabV3+ training notebook
 │   ├── fpnt.ipynb               # FPN training notebook
 │   └── une.ipynb                # U-Net training notebook
 └── testing/                     # Testing the models

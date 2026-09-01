@@ -1,9 +1,9 @@
 {
 	"Model": "DeepLabV3",
 	"Number of parameters": 25449409,
-	"Parameter size (MB)": 97.00513076782227,
-	"Mean latency (ms)": 697.5490420396818,
-	"Median latency (ms)": 128.18998549846583,
-	"95th percentile latency (ms)": 5700.550342006682,
-	"Latency standard deviation (ms)": 1707.7864725718205
+	"Parameter size (MB)": 97.08179092407227,
+	"Mean latency (ms)": 132.08358764001332,
+	"Median latency (ms)": 130.2188989999422,
+	"95th percentile latency (ms)": 145.5708050499311,
+	"Latency standard deviation (ms)": 6.550102309329929
 }
