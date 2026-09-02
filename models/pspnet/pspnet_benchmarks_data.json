@@ -1,0 +1,9 @@
+{
+	"Model": "PSPNet",
+	"Number of parameters": 24205776,
+	"Parameter size (MB)": 92.33770751953125,
+	"Mean latency (ms)": 170.9815732496645,
+	"Median latency (ms)": 168.32386999885784,
+	"95th percentile latency (ms)": 184.48734150115342,
+	"Latency standard deviation (ms)": 8.244594949368825
+}
