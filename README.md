@@ -100,18 +100,6 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
   - ROC and precision-recall curves
   - sample prediction visualizations
 
-![Mask over image](./figures/sugarcane_mask_over_scene01.jpg "The sugarcane mask over satellite test image")
-The sugarcane mask (red) over scene01 (satellite image) and cropped area used for training.
-
-![Patch image and mask pair.](./figures/patch_image_with_mask.png "Example of patch image and mask pair.")
-Example of patch image and mask pair.
-
-![Test image and mask pair and result](./figures/unet_sugarcane_results_1.png "Example of image and mask pair and the model result.")
-Example of image and mask pair and the model result.
-
-![Trained U-Net.](./figures/unet_sugarcane_results.png "Some metrics of the trained test U-Net.")
-Some metrics of the trained test UNet.
-
 ## Data requirements
 
 Before running the notebooks, the repository expects the following folders and files to exist:
@@ -178,6 +166,14 @@ To launch the notebooks locally:
 jupyter lab
 ```
 
+## Scenes and patches
+
+![Mask over image](./figures/scenes/sugarcane_mask_over_scene01.jpg "The sugarcane mask over satellite test image")
+The sugarcane mask (red) over scene01 (satellite image) and cropped area used for training.
+
+![Patch image and mask pair.](./figures/scenes/patch_image_with_mask.png "Example of patch image and mask pair.")
+Example of patch image and mask pair.
+
 ## Model outputs
 
 The training pipeline saves the following artifacts to `models/`:
@@ -195,6 +191,32 @@ The evaluation pipeline saves figures to `figures/` such as:
 * ROC curve
 * precision-recall curve
 * prediction examples over real scenes
+
+## Main metrics
+
+<!-- DATA_TABLE_START -->
+|  | Attention U-Net | DeepLabV3 | DeepLabV3+ | FPN | PSPNet | U-Net |
+| --- | --- | --- | --- | --- | --- | --- |
+| Precision | 0.80 | 0.81 | 0.77 | 0.82 | 0.79 | 0.81 |
+| Recall | 0.87 | 0.82 | 0.87 | 0.87 | 0.86 | 0.88 |
+| F1 Score | 0.83 | 0.81 | 0.82 | 0.84 | 0.82 | 0.85 |
+| ROC AUC | 0.92 | 0.91 | 0.91 | 0.93 | 0.91 | 0.93 |
+| IoU | 0.72 | 0.68 | 0.69 | 0.73 | 0.70 | 0.73 |
+| Number of parameters (10^6) | 7.90 | 25.45 | 26.74 | 6.10 | 23.94 | 7.77 |
+| Parameter size (MB) | 30.14 | 97.08 | 102.02 | 23.26 | 91.32 | 29.64 |
+| Mean latency (ms) | 71.86 | 132.08 | 146.97 | 59.07 | 131.77 | 51.22 |
+| Median latency (ms) | 70.56 | 130.22 | 145.03 | 57.49 | 130.05 | 50.00 |
+| 95th percentile latency (ms) | 77.90 | 145.57 | 158.73 | 68.47 | 145.85 | 57.89 |
+| Latency standard deviation (ms) | 4.33 | 6.55 | 5.75 | 5.75 | 7.33 | 3.08 |
+<!-- DATA_TABLE_END -->
+
+### Best model
+
+![Test image and mask pair and result](./figures/unet/unet_sugarcane_results_1.png "Example of image and mask pair and the model result.")
+Example of image and mask pair and the model result.
+
+![Trained U-Net.](./figures/unet/unet_sugarcane_results.png "Some metrics of the trained test U-Net.")
+Some metrics of the trained test U-Net.
 
 ## Common conventions and caveats
 

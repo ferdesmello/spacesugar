@@ -2,7 +2,6 @@ unet_tuner_results/
 data/
 apresentações/
 copernicus/
-save/
 
 *.dbf
 *.prj
@@ -16,6 +15,13 @@ save/
 
 *.npy
 
-*.keras
-
 *Zone.Identifier
+
+attention_unet_sugarcane.keras
+deeplabv3_sugarcane.keras
+deeplabv3_plus_sugarcane.keras
+fpn_sugarcane.keras
+pspnet_sugarcane.keras
+unet_sugarcane_2bandas.keras
+unet_sugarcane_area.keras
+unet_sugarcane_base.keras
