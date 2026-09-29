@@ -53,7 +53,7 @@ Check how the satellite images and the sugarcane poligons map were obtained read
 │   ├── deeplabv3_plus.ipynb         # DeepLabV3+ training notebook
 │   ├── fpnt.ipynb                   # FPN training notebook
 │   ├── pspnet.ipynb                 # PSPNet training notebook
-│   └── une.ipynb                    # U-Net training notebook
+│   └── unet.ipynb                   # U-Net training notebook
 └── testing/                         # Testing the models
     ├── metrics.ipynb                # Model metrics evaluation notebook
     ├── benchmarks.ipynb             # Model benchmark notebook
