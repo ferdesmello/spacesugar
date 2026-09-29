@@ -1,5 +1,4 @@
 unet_tuner_results/
-data/
 apresentações/
 copernicus/
 
@@ -14,6 +13,8 @@ copernicus/
 *.tif
 
 *.npy
+*.jp2
+*.tfrecord
 
 *Zone.Identifier
 

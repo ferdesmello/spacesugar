@@ -2,13 +2,14 @@
 
 SpaceSugar is a machine-learning project for identifying sugarcane fields in satellite imagery. The current workflow uses a U-Net convolutional neural network trained on image patches. It was developed for the Challenge 1 of the HBR residence with Epic of Sun.
 
-Check how the satellite images and the sugarcane poligons map were obtained [here](https://docs.google.com/document/d/13IcYZTUAA2PNvw97chLme6LqQtXJPMRA42IeirPJtfs/edit?usp=sharing).
+Check how the satellite images and the sugarcane poligons map were obtained reading the [data README](data/README.md).
 
 ## Repository structure
 
 <pre>
 ├── README.md
 ├── data/                        # Data for preprocessing and training
+│   ├── README.md
 │   ├── interim/                 # Merged images to be used in patching
 │   ├── processed/               # Processed data to be used in training
 │   │   ├── README.md
@@ -20,7 +21,7 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 │   │   └── patch_index.csv      # Index of the patches for organization
 │   ├── raw/                     # Raw data
 │   │   ├── mask/                # Raw shapefile
-│   │   ├── sceneXX/             # Scene XX with raw tif satellite band images
+│   │   ├── sceneXX/             # Scene XX with raw jp2 satellite band images
 │   │   └── ...
 │   └── tfrecords/               # TFRecord datasets for train/val/test
 │       ├── counts.json          # General information of the processed data
@@ -29,6 +30,7 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 ├── figures/                     # Produced figures as results
 │       ├── scenes/
 │       ├── unet/
+│       ├── unet_tests/
 │       ├── fpn/
 │       ├── deeplabv3/
 │       ├── deeplabv3_plus/
@@ -36,30 +38,33 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 │       └── attention_unet/
 ├── models/                      # Saved model weights, history, hyperparameters, metrics, and benchmarks
 │       ├── unet/
+│       ├── unet_tests/
 │       ├── fpn/
 │       ├── deeplabv3/
 │       ├── deeplabv3_plus/
 │       ├── pspnet/
 │       └── attention_unet/
-├── preprocessing/               # Preprocessing data
-│   ├── preprocessing.ipynb      # Preprocessing data for training
-│   └── image_cropping.ipynb     # Jupyter notebook for selecting scene cropping
-├── training/                    # Training the models
-│   ├── attention_unet.ipynb     # Attention U-Net training notebook
-│   ├── deeplabv3.ipynb          # DeepLabV3 training notebook
-│   ├── deeplabv3_plus.ipynb     # DeepLabV3+ training notebook
-│   ├── fpnt.ipynb               # FPN training notebook
-│   ├── pspnet.ipynb             # PSPNet training notebook
-│   └── une.ipynb                # U-Net training notebook
-└── testing/                     # Testing the models
-    ├── metrics.ipynb            # Model metrics evaluation notebook
-    └── benchmarks.ipynb         # Model benchmark notebook
+├── preprocessing/                   # Preprocessing data
+│   ├── preprocessing.ipynb          # Preprocessing data for training
+│   └── image_cropping.ipynb         # Jupyter notebook for selecting scene cropping
+├── training/                        # Training the models
+│   ├── attention_unet.ipynb         # Attention U-Net training notebook
+│   ├── deeplabv3.ipynb              # DeepLabV3 training notebook
+│   ├── deeplabv3_plus.ipynb         # DeepLabV3+ training notebook
+│   ├── fpnt.ipynb                   # FPN training notebook
+│   ├── pspnet.ipynb                 # PSPNet training notebook
+│   └── une.ipynb                    # U-Net training notebook
+└── testing/                         # Testing the models
+    ├── metrics.ipynb                # Model metrics evaluation notebook
+    ├── benchmarks.ipynb             # Model benchmark notebook
+    ├── results_architectures.ipynb  # Comparison of different architecture metrics
+    └── results_unet_tests.ipynb     # Comparison of different U-Net metrics
 </pre>
 
 ## What is in this repository
 
-- `preprocessing/`
-  Main notebooks for:
+- `preprocessing/preprocessing.ipynb`
+  Notebooks for:
   - creating the scenes images
   - loading the raw images and mesh
   - transforming, normalizing, and rasterizing the data
@@ -84,14 +89,14 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 - `testing/`
   Main end-to-end notebooks for:
   - evaluating predictions and generating visualizations
-  - benchmarking the trained model
+  - benchmarking the trained models
 
 - `models/`
-  Output directory for trained model artifacts and training metadata, including, for the U-Net model:
-  - `unet_sugarcane.keras`
-  - `unet_best_hyperparams.json`
-  - `unet_training_history.json`
-  - `unet_metrics_data.json`
+  Output directory for trained model artifacts and training metadata:
+  - `*_sugarcane.keras`
+  - `*_best_hyperparams.json`
+  - `*_training_history.json`
+  - `*_metrics_data.json`
 
 - `figures/`
   Directory for generated plots such as:
@@ -105,8 +110,8 @@ Check how the satellite images and the sugarcane poligons map were obtained [her
 Before running the notebooks, the repository expects the following folders and files to exist:
 
 - `data/raw/`
-  - one folder per scene, e.g. `scene01/`, containing the satellite bands in GeoTIFF format
   - one `mask/` folder with the sugarcane polygons in shapefile format
+  - one folder per scene, e.g. `scene01/`, containing the satellite bands in `.jp2` format
 - `data/interim/`
   - intermediate merged rasters or processed scene composites
 - `data/processed/`
@@ -155,10 +160,10 @@ For GPU training, make sure your TensorFlow build matches the CUDA/CUDNN drivers
 ## Quick start
 
 1. Prepare the raw dataset under `data/raw/` and ensure the shapefile mask is aligned with the satellite scenes.
-2. Run the preprocessing notebooks in `preprocessing/` to generate processed patches and TFRecords.
+2. Run the preprocessing notebook `preprocessing/preprocessing.ipynb` to generate processed patches and TFRecords.
 3. Verify that `data/processed/` and `data/tfrecords/` contain the expected metadata and split files.
-4. Open `training/training.ipynb` and run the full training workflow.
-5. After training, run the evaluation notebook in `testing/` to produce metrics and visualizations.
+4. Open `training/` and run the full `*.ipynb` training workflow for the model of the architecture you want.
+5. After training, run the evaluation notebooks in `testing/` to produce metrics and visualizations.
 
 To launch the notebooks locally:
 
@@ -178,10 +183,10 @@ Example of patch image and mask pair.
 
 The training pipeline saves the following artifacts to `models/`:
 
-* `unet_sugarcane.keras` - trained model weights and architecture
-* `unet_hyperparams.json` - best hyperparameters found during tuning
-* `unet_training_history.json` - epoch-by-epoch metrics
-* `unet_metrics_data.json` - evaluation metrics (precision, recall, F1, IoU, etc.)
+* `*_sugarcane.keras` - trained model weights and architecture
+* `*_hyperparams.json` - best hyperparameters found during tuning
+* `*_training_history.json` - epoch-by-epoch metrics
+* `*_metrics_data.json` - evaluation metrics (precision, recall, F1, IoU, etc.)
 
 The evaluation pipeline saves figures to `figures/` such as:
 
